@@ -1,9 +1,9 @@
 {
-  "name": "@bank/source",
+  "name": "source",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "nx run frontend:serve",
+    "start": "nx run-many -t start",
     "build": "nx run-many -t build",
     "test": "nx run-many -t test"
   },

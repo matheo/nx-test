@@ -46,7 +46,7 @@
         }
       }
     },
-    "serve": {
+    "start": {
       "continuous": true,
       "readyWhen": {
         "signal": true
