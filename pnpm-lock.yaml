@@ -330,8 +330,6 @@ importers:
         specifier: ^8.20.0
         version: 8.72.2(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@5.9.3)
 
-  src/core/models: {}
-
 packages:
 
   '@angular-devkit/core@22.2.7':

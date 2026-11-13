@@ -1,0 +1,25 @@
+{
+  "projects": {
+    "dtos": {
+      "type": "library",
+      "root": "src/core/dtos",
+      "entryFile": "index",
+      "sourceRoot": "src/core/dtos/src",
+      "compilerOptions": {
+        "tsConfigPath": "src/core/dtos/tsconfig.lib.json"
+      }
+    },
+    "products": {
+      "type": "library",
+      "root": "src/data/products",
+      "entryFile": "index",
+      "sourceRoot": "src/data/products/src",
+      "compilerOptions": {
+        "tsConfigPath": "src/data/products/tsconfig.lib.json"
+      }
+    }
+  },
+  "compilerOptions": {
+    "webpack": true
+  }
+}

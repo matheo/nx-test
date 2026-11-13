@@ -1,11 +1,21 @@
 {
   "extends": "./tsconfig.base.json",
   "compileOnSave": false,
-  "files": [],
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "dto/products": [
+        "src/data/products/src"
+      ],
+      "dto/products/*": [
+        "src/data/products/src/*"
+      ]
+    }
+  },
   "references": [
     {
-      "path": "./src/core/models"
+      "path": "./src/data/products"
     }
   ],
-  "compilerOptions": {}
+  "files": []
 }
