@@ -1,5 +1,10 @@
 packages:
-  - 'packages/*'
+  - 'src/**/*'
+
+overrides:
+  '@angular-devkit/core': 22.2.7
+  '@angular-devkit/schematics': 22.2.7
+  '@angular-devkit/schematics-cli': 22.2.7
 
 allowBuilds:
   '@parcel/watcher': true
