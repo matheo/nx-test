@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Requirements</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="">
+</head>
+
+<body>
+  <div class="css-mpw1xg e2s64ho0">
+    <p><strong>Por favor al momento de enviar su respuesta, crear un repositorio público en Github con todos los
+        archivos generados y colocar la URL al repositorio en los comentarios de este ejercicio (por favor ponerle como
+        nombre a la URL su nombre, por ejemplo, https://github.com/JuanPerez).&nbsp;</strong></p>
+    <p><strong>*Añadir un archivo ReadMe.md con las instrucciones de ejecución del proyecto y sus pruebas unitarias.
+      </strong></p>
+    <p><strong>Adicional, Subir un .zip o .rar con todos los archivos generados.&nbsp;</strong></p>
+    <p><strong>*Sugerencias:</strong></p>
+    <p><strong>Considerar usar una versión reciente de Angular/React (LTS o última major) - usar la tecnología acorde al
+        puesto aplicado.</strong></p>
+    <p>&nbsp;</p>
+    <p><strong>Prueba Técnica&nbsp;&nbsp;</strong></p>
+    <p><strong>Frontend - Angular o React&nbsp; (usar la tecnología acorde al puesto aplicado)</strong></p>
+    <p><span style="font-weight: 400;"><strong>Indicaciones generales</strong>&nbsp;</span></p>
+    <ul>
+      <li><span style="font-weight: 400;"> </span><span style="font-weight: 400;">Aplique todas las buenas prácticas,
+          clean code, <span>clean Architecture,</span> SOLID (se tomará en cuenta este punto&nbsp; para la
+          calificación).&nbsp;</span></li>
+      <li><span style="font-weight: 400;"> </span><span style="font-weight: 400;">Se debe realizar el UI Development
+          (Maquetación) sin usar frameworks de estilos o&nbsp; componentes prefabricados.&nbsp;</span></li>
+      <li><span style="font-weight: 400;"> </span><span style="font-weight: 400;">Se debe manejar excepciones y mostrar
+          mensajes de errores visuales.&nbsp;</span></li>
+      <li><span style="font-weight: 400;"> </span><span style="font-weight: 400;">Se debe realizar pruebas unitarias y
+          contar con un mínimo de 70% coverage.&nbsp;</span></li>
+      <li><span style="font-weight: 400;"><span>El propósito de este ejercicio es que puedas demostrar tus habilidades,
+            aplicando buenas prácticas de programación. Puedes incluir más detalles si lo crees necesario.</span></span>
+      </li>
+      <li><span style="font-weight: 400;"> </span><span style="font-weight: 400;">Posterior a la entrega de este
+          ejercicio, dependiendo de los resultados, se podrá agendar una entrevista técnica donde deberás defender la
+          solución planteada.</span><span style="font-weight: 400;"></span></li>
+    </ul>
+    <div><span style="font-weight: 400;"><strong>Nota:</strong> Los servicios necesarios a consumir para este proyecto
+        son locales. Más adelante se&nbsp;<br>detallará la manera de hacerlo.</span></div>
+    <p><strong>Herramientas y tecnologías utilizadas&nbsp;</strong></p>
+    <ul>
+      <li><span style="font-weight: 400;"><span>Si aplicaste para una posición con <strong>Angular</strong>, usar
+          </span></span><span style="font-weight: 400;">Angular 14 o superior. Si aplicaste para una posición
+          con<strong><span> React, </span></strong>usar la última versión que conozcas de</span><span
+          style="font-weight: 400;">&nbsp;React.</span></li>
+      <li><span style="font-weight: 400;"> </span><span style="font-weight: 400;">TypeScript 4.8 o superior.
+          <strong>(Obligatorio para pruebas con Angular / Opcional, pero altamente deseable para pruebas con
+            React).</strong></span></li>
+      <li><span style="font-weight: 400;"> </span><span style="font-weight: 400;">Pruebas unitarias de preferencia con
+          Jest.&nbsp;</span></li>
+      <li><span style="font-weight: 400;"> </span><span style="font-weight: 400;">IDE de su preferencia&nbsp;</span>
+      </li>
+    </ul>
+    <p><strong>Requerimiento de Microservicios y Funcionalidades</strong><span style="font-weight: 400;"> </span></p>
+    <p><strong><span style="font-weight: 400;">Generar una aplicación frontend para cumplir las funcionalidades: F1, F2,
+          F3, F4. Es deseable la funcionalidad F5 y el uso de rutas.&nbsp;</span></strong></p>
+    <p><strong>*Consideraciones Adicionales (para obtener la máxima puntuación)</strong></p>
+    <p><span style="font-weight: 400;">&nbsp;</span><span style="font-weight: 400;">Si quieres sobresalir, además de
+        cumplir con los requisitos mencionados anteriormente, se espera la implementación de las funcionalidades F5 y
+        F6.&nbsp;</span></p>
+    <p><span style="font-weight: 400;">Deseable que la solución tome en cuenta: rendimiento, pantallas de precarga
+        (Skeletons) y responsive design. </span></p>
+    <p><strong>Funcionalidades del Frontend&nbsp;</strong></p>
+    <p><strong>F1. </strong><span style="font-weight: 400;">Listado de productos financieros:&nbsp;</span></p>
+    <p><span style="font-weight: 400;">Se requiere una aplicación para visualizar los diferentes productos financieros
+        ofertados por la&nbsp; Institución Banco cargados de una API. Realizar la maquetación en base al diseño
+        D1.&nbsp;</span></p>
+    <p><strong>F2. </strong>B<span style="font-weight: 400;">úsqueda de productos financieros:</span><strong>
+      </strong><span style="font-weight: 400;">&nbsp;</span></p>
+    <p><span style="font-weight: 400;">Se requiere realizar búsqueda de los productos financieros mediante un campo de
+        texto. Realizar&nbsp; la maquetación en base al diseño D1.&nbsp;</span></p>
+    <p><strong>F3. </strong><span style="font-weight: 400;">Cantidad de registros</span><strong>:</strong><span
+        style="font-weight: 400;">&nbsp;&nbsp;</span></p>
+    <p><span style="font-weight: 400;">Se requiere que se muestre la cantidad de resultados mostrados en el listado y un
+        select que&nbsp; permita seleccionar la cantidad de registros a mostrar debe contener los siguientes valores: 5,
+        10&nbsp; y 20. Realizar la maquetación en base al diseño D1. Es deseable agregar una paginación simple en caso
+        de que haya un número considerable de registros. </span></p>
+    <p><strong>F4.</strong><span style="font-weight: 400;"> Agregar producto:&nbsp;&nbsp;</span></p>
+    <p><span style="font-weight: 400;">Se requiere la implementación un botón de “Agregar” para navegar al formulario de
+        registro, el&nbsp; formulario debe permitir la creación de un producto mediante un botón “Agregar” y debe&nbsp;
+        permitir la limpieza del formulario mediante un botón de “Reiniciar”. Realizar la maquetación del formulario
+        base al diseño D2 y de la ubicación del botón principal en base a diseño D3.&nbsp;</span></p>
+    <p><span style="font-weight: 400;">Cada campo del formulario contendrá su respectiva validación previa al envío del
+        formulario:&nbsp;</span></p>
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            <p><span style="font-weight: 400;">Campo&nbsp;</span></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">Validación</span></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><span style="font-weight: 400;">Id&nbsp;</span></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">- Requerido, mínimo 3 caracteres y máximo 10, validación de ser un Id
+                que&nbsp; no exista mediante el consumo del servicio de verificación.</span></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><span style="font-weight: 400;">Nombre&nbsp;</span></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">- Requerido, mínimo 5 caracteres y máximo 100</span></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><span style="font-weight: 400;">Descripción&nbsp;</span></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">- Requerido, mínimo 10 caracteres y máximo 200</span></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><span style="font-weight: 400;">Logo&nbsp;</span></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">- Requerido</span></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><span style="font-weight: 400;">Fecha de&nbsp;&nbsp;</span></p>
+            <p><span style="font-weight: 400;">Liberación&nbsp;</span></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">- Requerido, la Fecha debe ser igual o mayor a la fecha actual</span></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><span style="font-weight: 400;">Fecha de&nbsp;&nbsp;</span></p>
+            <p><span style="font-weight: 400;">Revisión</span></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">- Requerido, la Fecha debe ser exactamente un año posterior a la fecha de
+                liberación</span></p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p><br><br></p>
+    <p><span style="font-weight: 400;">En caso de no cumplirse con alguna de las validaciones se deberá mostrar
+        visualmente al usuario&nbsp; el estado de error de cada campo, de la siguiente manera:&nbsp;</span></p>
+    <p><span style="font-weight: 400;">&nbsp;&nbsp;</span></p>
+    <p><span style="font-weight: 400;">&nbsp;<img
+          src="https://d1sxk9v5q9mvr.cloudfront.net/work/servlet/fileservlet?id=59117675223392" alt="Statement image"
+          width="523" height="158"></span></p>
+    <p><span style="font-weight: 400;">&nbsp;&nbsp;</span></p>
+    <p><span style="font-weight: 400;">&nbsp;&nbsp;</span></p>
+    <p><strong>F5.</strong><span style="font-weight: 400;"> Editar producto:&nbsp;&nbsp;</span></p>
+    <p><span style="font-weight: 400;">Se requiere la implementación un menú contextual (en formato dropdown) que
+        permita&nbsp; seleccionar la opción de editar por cada producto, al hacer clic se deberá navegar a la pantalla
+        de&nbsp; edición del producto y debe mantener el campo de ID deshabilitado, el formulario de editar debe&nbsp;
+        mantener las mismas validaciones de la funcionalidad F4 y mostrar errores por cada campo.&nbsp; Realizar la
+        maquetación del formulario de edición en base al diseño D2 y la maquetación del menú&nbsp; de cada producto en
+        base al diseño D3.&nbsp;&nbsp;</span></p>
+    <p><strong>F6.</strong><span style="font-weight: 400;"> Eliminar producto:&nbsp;&nbsp;</span></p>
+    <p><span style="font-weight: 400;">Se requiere la implementación una opción de eliminar dentro del menú contextual
+        de cada&nbsp; producto, al hacer clic en la opción de eliminar se deberá mostrar un modal con un botón de&nbsp;
+        “Cancelar” y un botón “Eliminar”, al hacer clic en Eliminar se debe proceder con la eliminación,&nbsp; en el
+        caso de cancelar seria solo ocultar el modal. Realizar maquetación del menú de cada&nbsp; producto en base al
+        diseño D3 y la maquetación del modal en base al diseño D4.&nbsp;&nbsp;</span></p>
+    <p><strong>Diseño D1:</strong></p>
+    <p><img src="https://d1sxk9v5q9mvr.cloudfront.net/work/servlet/fileservlet?id=64921679682958" alt="Statement image"
+        width="675" height="351"></p>
+    <p><strong>Diseño D2:&nbsp;</strong></p>
+    <p><img src="https://d1sxk9v5q9mvr.cloudfront.net/work/servlet/fileservlet?id=64921695490920" alt="Statement image"
+        width="665" height="404"></p>
+    <p><strong>Diseño D3:</strong></p>
+    <p><img src="https://d1sxk9v5q9mvr.cloudfront.net/work/servlet/fileservlet?id=64921710858633" alt="Statement image"
+        width="668" height="395"></p>
+    <p><strong>Diseño D4:&nbsp;</strong></p>
+    <p><img src="https://d1sxk9v5q9mvr.cloudfront.net/work/servlet/fileservlet?id=64921737520958" alt="Statement image"
+        width="505" height="309"></p>
+    <p><strong>Documentación:</strong></p>
+    <table>
+      <tbody>
+        <tr>
+          <td colspan="4">
+            <p><strong>Estructura de Producto Financiero</strong></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>Clave&nbsp;</strong></p>
+          </td>
+          <td>
+            <p><strong>Tipo&nbsp;</strong></p>
+          </td>
+          <td>
+            <p><strong>Valor de ejemplo&nbsp;</strong></p>
+          </td>
+          <td>
+            <p><strong>Descripción</strong></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><span style="font-weight: 400;">id&nbsp;</span></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">String&nbsp;</span></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">trj-crd&nbsp;</span></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">Identificador único del&nbsp; producto.</span></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><span style="font-weight: 400;">name&nbsp;</span></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">String&nbsp;</span></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">Tarjetas de Crédito&nbsp;</span></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">Nombre del Producto.</span></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><span style="font-weight: 400;">description&nbsp;</span></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">String</span></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">Tarjeta de consumo&nbsp; bajo la modalidad de&nbsp; crédito</span></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">Descripción del Producto.</span></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><span style="font-weight: 400;">logo&nbsp;</span></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">String</span></p>
+          </td>
+          <td>
+            <p><a
+                href="https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg"
+                rel="noopener noreferrer" target="_blank" data-pdffiller-skip="1">enlace</a></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">Url de un logo </span><span style="font-weight: 400;">representativo para
+                el&nbsp; producto</span></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><span style="font-weight: 400;">date_release&nbsp;</span></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">Date&nbsp;</span></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">2023-02-01</span></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">Fecha a liberar el producto&nbsp; para los clientes en </span><span
+                style="font-weight: 400;">General</span></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><span style="font-weight: 400;">date_revision&nbsp;</span></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">Date&nbsp;</span></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">2024-02-01</span></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">Fecha de revisión del </span><span style="font-weight: 400;">producto
+                para cambiar&nbsp; Términos y Condiciones</span></p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>&nbsp;</p>
+    <p><strong>Servicios&nbsp;</strong></p>
+    <p>Los servicios por consumir serán de manera local. Tendrá que correr un proyecto backend&nbsp;<br>realizado con
+      Node.js.</p>
+    <p>Para hacerlo debe seguir los siguientes pasos:</p>
+    <p><strong>1.</strong> Descargar al final de esta pregunta en 'Download starter project'.<br><strong>2.</strong>
+      Descomprimir el archivo <strong>repo-interview-main.zip</strong>.&nbsp;<br><strong>3.</strong> Abrir un terminal
+      apuntando a la carpeta descomprimida.<br><strong>4.</strong> Instalar las dependencias con <strong><em>npm
+          install</em></strong>.<br><strong>5.</strong> Correr el proyecto con el comando <strong><em>npm run
+          start:dev</em></strong><br><strong>6.</strong> Se abrirá el servicio en el puerto
+      <strong>http://localhost:3002</strong></p>
+    <p><strong>Url Base: </strong>http://localhost:3002</p>
+    <p>&nbsp;</p>
+    <p><strong>OBTENER PRODUCTOS FINANCIEROS&nbsp;</strong></p>
+    <table style="height: 640px;" width="746">
+      <tbody>
+        <tr>
+          <td>
+            <p><strong>URL&nbsp;</strong></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">/bp/products</span></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>METHOD&nbsp;</strong></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">GET</span></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>EXAMPLE&nbsp;</strong></p>
+          </td>
+          <td>
+            <p>http://localhost:3002/bp/products</p>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <p><strong>RESPONSES</strong></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>Code&nbsp;</strong></p>
+          </td>
+          <td>
+            <p><strong>Description</strong></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><span style="font-weight: 400;">200</span></p>
+          </td>
+          <td>{<br>&nbsp; &nbsp; "data": [<br>&nbsp; &nbsp; &nbsp; &nbsp; {<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            "id": "uno",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "name": "Nombre producto",<br>&nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; "description": "Descripción producto",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            "logo": "assets-1.png",<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "date_release": "2025-01-01",<br>&nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "date_revision": "2025-01-01"<br>&nbsp; &nbsp; &nbsp; &nbsp; }<br>&nbsp;
+            &nbsp;]</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>&nbsp;</p>
+    <p><strong>CREAR PRODUCTO FINANCIERO</strong></p>
+    <table style="height: 1138px;" width="747">
+      <tbody>
+        <tr>
+          <td>
+            <p><strong>URL&nbsp;</strong></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">/bp/products</span></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>METHOD&nbsp;</strong></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">POST</span></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>EXAMPLE&nbsp;</strong></p>
+          </td>
+          <td>
+            <p>http://localhost:3002/bp/products</p>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <p><strong>REQUEST</strong></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><span style="font-weight: 400;">Json Body</span></p>
+          </td>
+          <td>{<br>&nbsp; &nbsp; "id": "dos",<br>&nbsp; &nbsp; "name": "Nombre producto",<br>&nbsp; &nbsp;
+            "description": "Descripción producto",<br>&nbsp; &nbsp; "logo": "assets-1.png",<br>&nbsp; &nbsp;
+            "date_release": "2025-01-01",<br>&nbsp; &nbsp; "date_revision": "2025-01-01"<br>}</td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <p><strong>RESPONSES</strong></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>Code&nbsp;</strong></p>
+          </td>
+          <td>
+            <p><strong>Description</strong></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><span style="font-weight: 400;">200</span></p>
+          </td>
+          <td>{<br>&nbsp; &nbsp; "message": "Product added successfully",<br>&nbsp; &nbsp; "data": {<br>&nbsp; &nbsp;
+            &nbsp; &nbsp; "id": "dos",<br>&nbsp; &nbsp; &nbsp; &nbsp; "name": "Nombre producto",<br>&nbsp; &nbsp; &nbsp;
+            &nbsp; "description": "Descripción producto",<br>&nbsp; &nbsp; &nbsp; &nbsp; "logo":
+            "assets-1.png",<br>&nbsp; &nbsp; &nbsp; &nbsp; "date_release": "2025-01-01",<br>&nbsp; &nbsp; &nbsp; &nbsp;
+            "date_revision": "2025-01-01"<br>&nbsp; &nbsp; }<br>}&nbsp;</td>
+        </tr>
+        <tr>
+          <td>
+            <p><span style="font-weight: 400;">400&nbsp;</span></p>
+          </td>
+          <td>
+            <p>{<br>&nbsp; &nbsp; "name": "BadRequestError",<br>&nbsp; &nbsp; "message": "Invalid body, check 'errors'
+              property for more info.",<br>&nbsp; &nbsp; ...<br>}</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>&nbsp;</p>
+    <p><strong>ACTUALIZAR PRODUCTO FINANCIERO</strong></p>
+    <table style="height: 982px;" width="744">
+      <tbody>
+        <tr>
+          <td>
+            <p><strong>URL&nbsp;</strong></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">/bp/products/:id</span></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>METHOD&nbsp;</strong></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">PUT</span></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>EXAMPLE&nbsp;</strong></p>
+          </td>
+          <td>
+            <p>http://localhost:3002/bp/products/uno</p>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <p><strong>REQUEST</strong></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><span style="font-weight: 400;">Json Body</span></p>
+          </td>
+          <td>{<br>&nbsp; &nbsp; "name": "Nombre actualizado",<br>&nbsp; &nbsp; "description": "Descripción
+            producto",<br>&nbsp; &nbsp; "logo": "assets-1.png",<br>&nbsp; &nbsp; "date_release": "2025-01-01",<br>&nbsp;
+            &nbsp; "date_revision": "2025-01-01"<br>}</td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <p><strong>RESPONSES</strong></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>Code&nbsp;</strong></p>
+          </td>
+          <td>
+            <p><strong>Description</strong></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><span style="font-weight: 400;">200</span></p>
+          </td>
+          <td>{<br>&nbsp; &nbsp; "message": "Product updated successfully",<br>&nbsp; &nbsp; "data": {<br>&nbsp; &nbsp;
+            &nbsp; &nbsp; "name": "Nombre actualizado",<br>&nbsp; &nbsp; &nbsp; &nbsp; "description": "Descripción
+            producto",<br>&nbsp; &nbsp; &nbsp; &nbsp; "logo": "assets-1.png",<br>&nbsp; &nbsp; &nbsp; &nbsp;
+            "date_release": "2025-01-01",<br>&nbsp; &nbsp; &nbsp; &nbsp; "date_revision": "2025-01-01"<br>&nbsp; &nbsp;
+            }<br>}</td>
+        </tr>
+        <tr>
+          <td>
+            <p><span style="font-weight: 400;">404</span></p>
+          </td>
+          <td>
+            <p>{<br>&nbsp; &nbsp; "name": "NotFoundError",<br>&nbsp; &nbsp; "message": "Not product found with that
+              identifier",<br>&nbsp; &nbsp; ...<br>}&nbsp;</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>&nbsp;</p>
+    <p><strong>ELIMINAR PRODUCTOS FINANCIEROS</strong></p>
+    <table style="height: 702px;" width="734">
+      <tbody>
+        <tr>
+          <td>
+            <p><strong>URL&nbsp;</strong></p>
+          </td>
+          <td>
+            <p>/bp/products/:id</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>METHOD&nbsp;</strong></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">DELETE</span></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>EXAMPLE&nbsp;</strong></p>
+          </td>
+          <td>
+            <p>http://localhost:3002/bp/products/dos</p>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <p><strong>PARAMS</strong></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><span style="font-weight: 400;">id&nbsp;</span></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">dos</span></p>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <p><strong>RESPONSES</strong></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>Code&nbsp;</strong></p>
+          </td>
+          <td>
+            <p><strong>Description</strong></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><span style="font-weight: 400;">200&nbsp;</span></p>
+          </td>
+          <td>
+            <p>{<br>&nbsp; &nbsp; "message": "Product removed successfully"<br>}&nbsp;</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><span style="font-weight: 400;">404&nbsp;</span></p>
+          </td>
+          <td>
+            <p>{<br>&nbsp; &nbsp; "name": "NotFoundError",<br>&nbsp; &nbsp; "message": "Not product found with that
+              identifier",<br>&nbsp; &nbsp; ...<br>}&nbsp;</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>&nbsp;</p>
+    <p><strong>VERIFICACIÓN DE EXISTENCIA DE ID&nbsp;</strong></p>
+    <table style="height: 538px;" width="731">
+      <tbody>
+        <tr>
+          <td>
+            <p><strong>URL&nbsp;</strong></p>
+          </td>
+          <td>
+            <p>/bp/products/verification/:id&nbsp;</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>METHOD&nbsp;</strong></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">GET</span></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>EXAMPLE&nbsp;</strong></p>
+          </td>
+          <td>
+            <p>http://localhost:3002/bp/products/verification/uno</p>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <p><strong>PARAMS</strong></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><span style="font-weight: 400;">id&nbsp;</span></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">uno</span></p>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <p><strong>RESPONSES</strong></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>Code&nbsp;</strong></p>
+          </td>
+          <td>
+            <p><strong>Description</strong></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><span style="font-weight: 400;">200&nbsp;</span></p>
+          </td>
+          <td>
+            <p><span style="font-weight: 400;">true/false (true existe / false no existe)</span></p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>&nbsp;</p>
+    <p><strong>Recordatorio de Entregables&nbsp;</strong></p>
+    <ul>
+      <li><span style="font-weight: 400;"> </span><span style="font-weight: 400;">Por favor al momento de enviar su
+          respuesta, crear un repositorio público en Github con todos los archivos generados y colocar la URL al
+          repositorio en los comentarios de este ejercicio</span><span style="font-weight: 400;">.</span></li>
+      <li><span style="font-weight: 400;"><strong>Añadir un archivo ReadMe.md con las instrucciones de ejecución del
+            proyecto y sus pruebas unitarias.</strong></span></li>
+      <li><span style="font-weight: 400;"> </span><span style="font-weight: 400;">Adicional, Subir un .zip o .rar con
+          todos los archivos generados.</span></li>
+    </ul>
+    <p>&nbsp;</p>
+  </div>
+</body>
+
+</html>
