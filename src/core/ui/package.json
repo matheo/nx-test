@@ -1,0 +1,16 @@
+{
+  "name": "@bank/ui",
+  "version": "0.0.1",
+  "private": true,
+  "sideEffects": false,
+  "peerDependencies": {
+    "@angular/core": "^22.2.0"
+  },
+  "exports": {
+    ".": {
+      "@bank/source": "./src/index.ts",
+      "types": "./dist/bank-ui.d.ts",
+      "default": "./dist/esm2022/bank-ui.js"
+    }
+  }
+}

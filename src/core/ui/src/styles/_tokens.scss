@@ -1,0 +1,30 @@
+:root {
+  // Colors
+  --ui-color-page-bg: #f3f4f8;
+  --ui-color-surface: #ffffff;
+  --ui-color-text: #1e2a4a;
+  --ui-color-text-muted: #6b7390;
+  --ui-color-border: #e1e4ec;
+  --ui-color-table-head-bg: #f3f4f8;
+  --ui-color-avatar-bg: #c6cad9;
+  --ui-color-focus: #3b5bdb;
+  --ui-color-error: #c92a2a;
+
+  // Shape and spacing
+  --ui-radius-sm: 6px;
+  --ui-radius-md: 10px;
+  --ui-radius-full: 999px;
+  --ui-space-1: 4px;
+  --ui-space-2: 8px;
+  --ui-space-3: 12px;
+  --ui-space-4: 16px;
+  --ui-space-5: 24px;
+  --ui-space-6: 32px;
+
+  // Typography
+  --ui-font-family:
+    system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+  --ui-font-size-sm: 0.8125rem;
+  --ui-font-size-md: 0.9375rem;
+}

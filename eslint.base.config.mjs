@@ -20,6 +20,14 @@ export default [
               sourceTag: '*',
               onlyDependOnLibsWithTags: ['*'],
             },
+            {
+              sourceTag: 'type:app',
+              onlyDependOnLibsWithTags: ['type:ui', 'type:model', 'type:app'],
+            },
+            {
+              sourceTag: 'type:ui',
+              onlyDependOnLibsWithTags: ['type:ui', 'type:model'],
+            },
           ],
         },
       ],

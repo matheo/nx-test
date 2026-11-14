@@ -1,1 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+@use '../../../core/ui/src/styles/tokens';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--ui-color-page-bg);
+  color: var(--ui-color-text);
+  font-family: var(--ui-font-family);
+  font-size: var(--ui-font-size-md);
+}

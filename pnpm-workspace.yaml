@@ -1,5 +1,7 @@
 packages:
   - 'src/**/*'
+  - '!**/dist/**'
+  - '!**/dist'
 
 overrides:
   '@angular-devkit/core': 22.2.7
