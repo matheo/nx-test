@@ -43,4 +43,26 @@ describe('UiAvatar', () => {
     expect(el.querySelector('img')).toBeNull();
     expect(el.querySelector('.initials')?.textContent?.trim()).toBe('TD');
   });
+
+  it('exposes the fallback as an image named after the product', async () => {
+    const fixture = await setup();
+    const initials = (fixture.nativeElement as HTMLElement).querySelector(
+      '.initials',
+    );
+    expect(initials?.getAttribute('role')).toBe('img');
+    expect(initials?.getAttribute('aria-label')).toBe('Tarjeta de crédito oro');
+    expect(initials?.hasAttribute('aria-hidden')).toBe(false);
+  });
+
+  it('hides the fallback from assistive tech when the name is empty', async () => {
+    const fixture = await setup();
+    fixture.componentInstance.name.set('   ');
+    await fixture.whenStable();
+    const initials = (fixture.nativeElement as HTMLElement).querySelector(
+      '.initials',
+    );
+    expect(initials?.getAttribute('aria-hidden')).toBe('true');
+    expect(initials?.hasAttribute('role')).toBe(false);
+    expect(initials?.hasAttribute('aria-label')).toBe(false);
+  });
 });

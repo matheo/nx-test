@@ -19,9 +19,13 @@ import {
         (error)="failed.set(true)"
       />
     } @else {
-      <span class="initials" role="img" [attr.aria-label]="name()">{{
-        initials()
-      }}</span>
+      @if (hasName()) {
+        <span class="initials" role="img" [attr.aria-label]="name()">{{
+          initials()
+        }}</span>
+      } @else {
+        <span class="initials" aria-hidden="true"></span>
+      }
     }
   `,
   styles: `
@@ -58,6 +62,8 @@ export class UiAvatar {
   protected readonly showImage = computed(
     () => !!this.src()?.trim() && !this.failed(),
   );
+
+  protected readonly hasName = computed(() => !!this.name().trim());
 
   protected readonly initials = computed(() =>
     this.name()
