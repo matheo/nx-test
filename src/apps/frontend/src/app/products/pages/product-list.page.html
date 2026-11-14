@@ -1,0 +1,66 @@
+<div class="toolbar">
+  <ui-search-input
+    label="Buscar productos"
+    placeholder="Search..."
+    [value]="store.query()"
+    (valueChange)="store.query.set($event)"
+  />
+</div>
+
+<ui-table-card>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Logo</th>
+        <th scope="col">Nombre del producto</th>
+        <th scope="col">
+          Descripción
+          <ui-info-hint text="Descripción del producto" />
+        </th>
+        <th scope="col">
+          Fecha de liberación
+          <ui-info-hint text="Fecha en la que el producto fue liberado" />
+        </th>
+        <th scope="col">
+          Fecha de reestructuración
+          <ui-info-hint text="Fecha en la que el producto fue reestructurado" />
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @if (store.loading()) {
+      <tr>
+        <td class="message" colspan="5">Cargando...</td>
+      </tr>
+      } @else if (store.error()) {
+      <tr>
+        <td class="message error" colspan="5" role="alert">
+          {{ store.error() }}
+        </td>
+      </tr>
+      } @else if (store.visible().length === 0) {
+      <tr>
+        <td class="message" colspan="5">No hay productos</td>
+      </tr>
+      } @else { @for (product of store.visible(); track product.id) {
+      <tr data-testid="product-row">
+        <td><ui-avatar [src]="product.logo" [name]="product.name" /></td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.description }}</td>
+        <td>{{ product.date_release | displayDate }}</td>
+        <td>{{ product.date_revision | displayDate }}</td>
+      </tr>
+      } }
+    </tbody>
+  </table>
+
+  <ng-container uiTableFooter>
+    <span>{{ store.total() }} Resultados</span>
+    <ui-select
+      label="Resultados por página"
+      [options]="pageSizeOptions"
+      [value]="store.pageSize()"
+      (valueChange)="onPageSizeChange($event)"
+    />
+  </ng-container>
+</ui-table-card>

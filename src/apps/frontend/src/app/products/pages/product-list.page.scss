@@ -1,0 +1,42 @@
+:host {
+  display: block;
+}
+
+.toolbar {
+  margin-bottom: var(--ui-space-4);
+}
+
+.table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: var(--ui-font-size-md);
+}
+
+th,
+td {
+  padding: var(--ui-space-3) var(--ui-space-4);
+  border-bottom: 1px solid var(--ui-color-border);
+}
+
+th {
+  background: var(--ui-color-table-head-bg);
+  font-size: var(--ui-font-size-sm);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.message {
+  padding: var(--ui-space-5);
+  text-align: center;
+  color: var(--ui-color-text-muted);
+}
+
+.error {
+  color: var(--ui-color-error);
+}
