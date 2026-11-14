@@ -18,6 +18,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
       vertical-align: middle;
     }
     .hint {
+      background: var(--ui-color-text-muted);
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -26,10 +27,10 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
       height: 16px;
       border: 1px solid var(--ui-color-text-muted);
       border-radius: var(--ui-radius-full);
-      color: var(--ui-color-text-muted);
-      font-size: 0.6875rem;
+      color: var(--ui-color-surface);
+      font-size: 0.5rem;
       font-weight: 700;
-      font-style: italic;
+      font-style: normal;
       cursor: help;
     }
   `,
