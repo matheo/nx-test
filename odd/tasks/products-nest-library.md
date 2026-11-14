@@ -56,6 +56,7 @@ Port the `starter/src` Express + routing-controllers product CRUD API into the N
 ## Progress
 - Plan approved 2026-11-13.
 - starter/ added to .nxignore and root eslint ignores so it is no longer an Nx project.
+- Backend lint was failing on prettier before this work: ran eslint --fix (quote style) and ignored dist in backend lint.
 
 ## Next step
 T1.
