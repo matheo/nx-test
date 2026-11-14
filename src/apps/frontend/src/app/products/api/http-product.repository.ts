@@ -1,8 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { ProductInterface } from '@bank/models';
-import { map, Observable } from 'rxjs';
+import { map, Observable, OperatorFunction } from 'rxjs';
 import { ProductRepository } from './product.repository';
+
+/**
+ * Backend contract: GET list, POST and PUT respond with `{ data }`.
+ * GET by id, GET verification and DELETE respond unwrapped.
+ */
+const unwrapData = <T>(): OperatorFunction<{ data: T }, T> =>
+  map((response) => response.data);
 
 @Injectable()
 export class HttpProductRepository extends ProductRepository {
@@ -11,13 +18,16 @@ export class HttpProductRepository extends ProductRepository {
   getAll(): Observable<ProductInterface[]> {
     return this.http
       .get<{ data: ProductInterface[] }>('/backend/products')
-      .pipe(map((response) => response.data ?? []));
+      .pipe(
+        unwrapData<ProductInterface[]>(),
+        map((data) => data ?? []),
+      );
   }
 
   create(product: ProductInterface): Observable<ProductInterface> {
     return this.http
       .post<{ data: ProductInterface }>('/backend/products', product)
-      .pipe(map((response) => response.data));
+      .pipe(unwrapData<ProductInterface>());
   }
 
   getById(id: string): Observable<ProductInterface> {
@@ -32,7 +42,7 @@ export class HttpProductRepository extends ProductRepository {
         `/backend/products/${encodeURIComponent(id)}`,
         product,
       )
-      .pipe(map((response) => response.data));
+      .pipe(unwrapData<ProductInterface>());
   }
 
   remove(id: string): Observable<void> {
