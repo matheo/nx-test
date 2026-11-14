@@ -1,0 +1,39 @@
+{
+  "name": "@bank/products",
+  "version": "0.0.1",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "@bank/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "@bank/models": "workspace:*"
+  },
+  "nx": {
+    "name": "products",
+    "tags": [
+      "scope:products",
+      "type:data"
+    ],
+    "targets": {
+      "test": {
+        "executor": "nx:run-commands",
+        "cache": true,
+        "inputs": [
+          "default",
+          "^production"
+        ],
+        "options": {
+          "command": "vitest run",
+          "cwd": "{projectRoot}"
+        }
+      }
+    }
+  }
+}

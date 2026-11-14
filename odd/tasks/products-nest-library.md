@@ -22,7 +22,7 @@ Port the `starter/src` Express + routing-controllers product CRUD API into the N
 
 ## Tasks
 - [x] T1: Restore `src/core/models` (`@bank/models`), types only, with `ProductInterface`.
-- [ ] T2: Make `src/data/products` a real Nest lib with:
+- [x] T2: Make `src/data/products` a real Nest lib with:
   - a package.json
   - a fixed tsconfig
   - message-error const
@@ -40,7 +40,7 @@ Port the `starter/src` Express + routing-controllers product CRUD API into the N
   - update the frontend proxy
   - update the root tsconfig references
   - run `nx sync`.
-- [ ] T4: Add specs for `ProductsService` (CRUD, 400 on duplicate, 404 on missing) and for the controller.
+- [x] T4: Add specs for `ProductsService` (CRUD, 400 on duplicate, 404 on missing) and for the controller.
 
 ## Acceptance criteria / Checks
 - `pnpm nx show projects` includes `products` and `models`. The graph is `backend → products → models`, and the frontend does not depend on `products`.
@@ -58,6 +58,8 @@ Port the `starter/src` Express + routing-controllers product CRUD API into the N
 - starter/ added to .nxignore and root eslint ignores so it is no longer an Nx project.
 - Backend lint was failing on prettier before this work: ran eslint --fix (quote style) and ignored dist in backend lint.
 - T1 done: models lib created (nx name `models`); `nx run-many -t typecheck eslint:lint -p models` passed.
+- T2 done: products lib built; `nx run-many -t typecheck build eslint:lint -p products models` passed (models now also buildable so module-boundary lint passes; no runtime require of @bank/models in dist). Stale root `dto/products` paths alias removed.
+- T4 done: vitest (nx:run-commands target in package.json, vitest.config.mts, tsconfig.spec.json); `nx test products` 19 tests passed.
 
 ## Next step
-T2.
+T3.
