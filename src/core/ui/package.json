@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "sideEffects": false,
+  "devDependencies": {
+    "@bank/testing": "workspace:*"
+  },
   "peerDependencies": {
     "@angular/core": "^22.2.0"
   },

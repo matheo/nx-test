@@ -13,6 +13,9 @@
     },
     {
       "path": "./src/core/ui"
+    },
+    {
+      "path": "./src/core/testing"
     }
   ],
   "files": []

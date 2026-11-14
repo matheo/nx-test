@@ -416,14 +416,28 @@ importers:
       '@bank/ui':
         specifier: workspace:*
         version: link:../../core/ui
+    devDependencies:
+      '@bank/testing':
+        specifier: workspace:*
+        version: link:../../core/testing
 
   src/core/models: {}
+
+  src/core/testing:
+    dependencies:
+      '@bank/models':
+        specifier: workspace:*
+        version: link:../models
 
   src/core/ui:
     dependencies:
       '@angular/core':
         specifier: ^22.2.0
         version: 22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2)
+    devDependencies:
+      '@bank/testing':
+        specifier: workspace:*
+        version: link:../testing
 
   src/data/products:
     dependencies:

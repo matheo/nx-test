@@ -1,0 +1,26 @@
+{
+  "name": "@bank/testing",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "dependencies": {
+    "@bank/models": "workspace:*"
+  },
+  "exports": {
+    ".": {
+      "@bank/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "nx": {
+    "name": "testing",
+    "tags": [
+      "scope:shared",
+      "type:testing"
+    ]
+  }
+}

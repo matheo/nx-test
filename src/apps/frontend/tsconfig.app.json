@@ -5,13 +5,16 @@
     "types": []
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["src/**/*.spec.ts", "src/**/*.test.ts"],
+  "exclude": ["src/**/*.spec.ts", "src/**/*.test.ts", "src/**/testing/**"],
   "references": [
     {
       "path": "../../core/ui/tsconfig.lib.json"
     },
     {
       "path": "../../core/models/tsconfig.lib.json"
+    },
+    {
+      "path": "../../core/testing/tsconfig.lib.json"
     }
   ]
 }

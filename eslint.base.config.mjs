@@ -22,11 +22,24 @@ export default [
             },
             {
               sourceTag: 'type:app',
-              onlyDependOnLibsWithTags: ['type:ui', 'type:model', 'type:app'],
+              onlyDependOnLibsWithTags: [
+                'type:ui',
+                'type:model',
+                'type:app',
+                'type:testing',
+              ],
             },
             {
               sourceTag: 'type:ui',
-              onlyDependOnLibsWithTags: ['type:ui', 'type:model'],
+              onlyDependOnLibsWithTags: [
+                'type:ui',
+                'type:model',
+                'type:testing',
+              ],
+            },
+            {
+              sourceTag: 'type:testing',
+              onlyDependOnLibsWithTags: ['type:testing', 'type:model'],
             },
           ],
         },
