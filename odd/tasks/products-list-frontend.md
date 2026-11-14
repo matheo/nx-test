@@ -65,7 +65,7 @@ The frontend is an empty shell: no HttpClient, no routes, no UI. The brief forbi
 - F2 `/new`: add product with a reactive form and ID verification.
 - F3 `/:id`: edit, with the ID disabled.
 - F4: delete through the row menu and a confirm dialog.
-- Search stored in the URL `?query=`.
+- ~~Search stored in the URL~~ Done as F2 (2026-11-14): the param is `?search=` (user's choice, not `?query=`). The page has a `search` input bound through `withComponentInputBinding`, and an effect syncs it into `store.query`. Typing navigates with `replaceUrl` and `merge`, and an empty term removes the param. Checks: frontend test (10), eslint:lint, typecheck and build all pass.
 
 ## Progress
 - Plan approved 2026-11-13. The user overrode the brief's 5/10/15 to **5/10/20**.

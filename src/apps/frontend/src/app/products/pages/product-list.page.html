@@ -3,7 +3,7 @@
     label="Buscar productos"
     placeholder="Search..."
     [value]="store.query()"
-    (valueChange)="store.query.set($event)"
+    (valueChange)="onSearchChange($event)"
   />
 </div>
 
