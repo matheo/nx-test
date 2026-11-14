@@ -42,7 +42,8 @@
         "development": {
           "optimization": false,
           "extractLicenses": false,
-          "sourceMap": true
+          "sourceMap": true,
+          "conditions": ["@bank/source", "module", "development"]
         }
       }
     },
@@ -52,7 +53,6 @@
         "signal": true
       },
       "executor": "@angular/build:dev-server",
-      "dependsOn": ["^build"],
       "defaultConfiguration": "development",
       "configurations": {
         "production": {
