@@ -10,6 +10,12 @@ class FakeRepository extends ProductRepository {
   getAll() {
     return this.result;
   }
+  create(product: ProductInterface) {
+    return of(product);
+  }
+  exists() {
+    return of(false);
+  }
 }
 
 describe('ProductListStore', () => {

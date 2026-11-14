@@ -13,4 +13,16 @@ export class HttpProductRepository extends ProductRepository {
       .get<{ data: ProductInterface[] }>('/backend/products')
       .pipe(map((response) => response.data ?? []));
   }
+
+  create(product: ProductInterface): Observable<ProductInterface> {
+    return this.http
+      .post<{ data: ProductInterface }>('/backend/products', product)
+      .pipe(map((response) => response.data));
+  }
+
+  exists(id: string): Observable<boolean> {
+    return this.http.get<boolean>(
+      `/backend/products/verification/${encodeURIComponent(id)}`,
+    );
+  }
 }

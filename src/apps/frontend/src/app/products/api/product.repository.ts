@@ -4,4 +4,7 @@ import { Observable } from 'rxjs';
 /** Port for product data access. Also used as the DI token. */
 export abstract class ProductRepository {
   abstract getAll(): Observable<ProductInterface[]>;
+  abstract create(product: ProductInterface): Observable<ProductInterface>;
+  /** Emits true when a product with this id already exists. */
+  abstract exists(id: string): Observable<boolean>;
 }
