@@ -32,7 +32,7 @@ Port the `starter/src` Express + routing-controllers product CRUD API into the N
   - module
   - barrel
   - and class-validator/class-transformer added as deps.
-- [ ] T3: Wire up the backend:
+- [x] T3: Wire up the backend:
   - add the dependency
   - import `ProductsModule`
   - update `main.ts` (prefix, pipe, CORS, port 3002)
@@ -60,6 +60,8 @@ Port the `starter/src` Express + routing-controllers product CRUD API into the N
 - T1 done: models lib created (nx name `models`); `nx run-many -t typecheck eslint:lint -p models` passed.
 - T2 done: products lib built; `nx run-many -t typecheck build eslint:lint -p products models` passed (models now also buildable so module-boundary lint passes; no runtime require of @bank/models in dist). Stale root `dto/products` paths alias removed.
 - T4 done: vitest (nx:run-commands target in package.json, vitest.config.mts, tsconfig.spec.json); `nx test products` 19 tests passed.
+- T3 done: backend wired (module, main.ts, ^build deps, proxy, nx sync); curl smoke on :3002/bp/products OK (201, dup 400, 404, invalid 400, verify, put, delete); `nx test backend` 1 passed.
+- `nx run-many -t typecheck build eslint:lint test`: 16/16 passed.
 
 ## Next step
-T3.
+Merge feat/products-nest-library into main.

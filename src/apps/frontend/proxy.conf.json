@@ -1,6 +1,9 @@
 {
   "/backend": {
-    "target": "http://localhost:3333",
-    "secure": false
+    "target": "http://localhost:3002",
+    "secure": false,
+    "pathRewrite": {
+      "^/backend": "/bp"
+    }
   }
 }
