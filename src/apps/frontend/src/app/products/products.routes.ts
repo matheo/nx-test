@@ -6,4 +6,9 @@ export const productsRoutes: Routes = [
     loadComponent: () =>
       import('./pages/product-list.page').then((m) => m.ProductListPage),
   },
+  {
+    path: 'new',
+    loadComponent: () =>
+      import('./pages/product-form.page').then((m) => m.ProductFormPage),
+  },
 ];

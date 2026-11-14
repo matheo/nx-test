@@ -1,0 +1,62 @@
+<form class="card" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+  <h1 class="title">Formulario de Registro</h1>
+
+  <div class="grid">
+    <ui-form-field label="ID" for="product-id" [error]="errorFor('id')">
+      <input id="product-id" type="text" formControlName="id" />
+    </ui-form-field>
+
+    <ui-form-field label="Nombre" for="product-name" [error]="errorFor('name')">
+      <input id="product-name" type="text" formControlName="name" />
+    </ui-form-field>
+
+    <ui-form-field
+      label="Descripción"
+      for="product-description"
+      [error]="errorFor('description')"
+    >
+      <input
+        id="product-description"
+        type="text"
+        formControlName="description"
+      />
+    </ui-form-field>
+
+    <ui-form-field label="Logo" for="product-logo" [error]="errorFor('logo')">
+      <input id="product-logo" type="text" formControlName="logo" />
+    </ui-form-field>
+
+    <ui-form-field
+      label="Fecha Liberación"
+      for="product-release"
+      [error]="errorFor('date_release')"
+    >
+      <input id="product-release" type="date" formControlName="date_release" />
+    </ui-form-field>
+
+    <ui-form-field
+      label="Fecha Revisión"
+      for="product-revision"
+      [error]="errorFor('date_revision')"
+    >
+      <input
+        id="product-revision"
+        type="date"
+        formControlName="date_revision"
+      />
+    </ui-form-field>
+  </div>
+
+  @if (serverError(); as message) {
+    <p class="server-error" role="alert">{{ message }}</p>
+  }
+
+  <div class="actions">
+    <button uiButton type="button" variant="secondary" (click)="reset()">
+      Reiniciar
+    </button>
+    <button uiButton type="submit" variant="primary" [disabled]="!canSubmit()">
+      Enviar
+    </button>
+  </div>
+</form>
