@@ -21,7 +21,7 @@ Port the `starter/src` Express + routing-controllers product CRUD API into the N
 - TDD: off. No project or session TDD config was found, so ordinary functional checks apply.
 
 ## Tasks
-- [ ] T1: Restore `src/core/models` (`@bank/models`), types only, with `ProductInterface`.
+- [x] T1: Restore `src/core/models` (`@bank/models`), types only, with `ProductInterface`.
 - [ ] T2: Make `src/data/products` a real Nest lib with:
   - a package.json
   - a fixed tsconfig
@@ -57,6 +57,7 @@ Port the `starter/src` Express + routing-controllers product CRUD API into the N
 - Plan approved 2026-11-13.
 - starter/ added to .nxignore and root eslint ignores so it is no longer an Nx project.
 - Backend lint was failing on prettier before this work: ran eslint --fix (quote style) and ignored dist in backend lint.
+- T1 done: models lib created (nx name `models`); `nx run-many -t typecheck eslint:lint -p models` passed.
 
 ## Next step
-T1.
+T2.
