@@ -3,6 +3,7 @@ import {
   DestroyRef,
   inject,
   Injectable,
+  linkedSignal,
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -36,9 +37,30 @@ export class ProductListStore {
     );
   });
 
-  readonly visible = computed(() => this.filtered().slice(0, this.pageSize()));
-
   readonly total = computed(() => this.filtered().length);
+
+  readonly pageCount = computed(() =>
+    Math.max(1, Math.ceil(this.total() / this.pageSize())),
+  );
+
+  /** Current page (1-based); resets to 1 whenever the search or page size changes. */
+  readonly page = linkedSignal({
+    source: () => [this.query(), this.pageSize()] as const,
+    computation: () => 1,
+  });
+
+  readonly visible = computed(() => {
+    const start = (this.page() - 1) * this.pageSize();
+    return this.filtered().slice(start, start + this.pageSize());
+  });
+
+  next(): void {
+    this.page.update((page) => Math.min(page + 1, this.pageCount()));
+  }
+
+  prev(): void {
+    this.page.update((page) => Math.max(page - 1, 1));
+  }
 
   load(): void {
     this.loading.set(true);

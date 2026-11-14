@@ -35,6 +35,15 @@ describe('ProductListPage', () => {
     expect(el.textContent).toContain('8 Resultados');
   });
 
+  it('navigates to the next page keeping the total', async () => {
+    const el = await render(8);
+    (el.querySelector('[aria-label="Página siguiente"]') as HTMLButtonElement).click();
+    await new Promise((r) => setTimeout(r));
+    expect(rows(el)).toHaveLength(3);
+    expect(el.textContent).toContain('8 Resultados');
+    expect(el.textContent).toContain('Página 2 de 2');
+  });
+
   it('formats dates as dd/mm/yyyy', async () => {
     const el = await render(1);
     expect(el.textContent).toContain('01/01/2024');

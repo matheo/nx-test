@@ -78,6 +78,12 @@ The frontend is an empty shell: no HttpClient, no routes, no UI. The brief forbi
 
 - Dev-server fix (2026-11-14): the `src/**/*` workspace glob picked up `src/core/ui/dist` as a duplicate `@bank/ui` package and frontend linked to it. Added `!**/dist` globs to pnpm-workspace.yaml; ui exports gained `types: ./dist/bank-ui.d.ts` with default `./dist/esm2022/bank-ui.js`; frontend `start` sets `prebundle.exclude: [@bank/ui, @bank/models]` so Vite does not resolve them from `.angular/vite-root`. Checks re-run: all pass. Dev server not yet verified (user restart pending).
 - Hot-reload fix (2026-11-14): the Angular builder ignores tsconfig `customConditions`, so the dev server bundled `@bank/ui` from `dist`. The frontend `development` build now sets `conditions: ["@bank/source", "module", "development"]` (source in dev, dist in prod/tests). Tried and rejected tsconfig `paths`: they break the backend runtime (tsc does not rewrite paths) and the frontend project-references typecheck (TS6059/TS6307). Checks: run-many test eslint:lint build typecheck, all 6 projects pass.
+- F3 page navigation (2026-11-14), uncommitted:
+  - the store has `page` (a `linkedSignal` that resets to 1 when the query or the page size changes), `pageCount`, and `next()` / `prev()`, both clamped
+  - `visible` slices the current page, and `total` is still the count of all matches
+  - new generic `ui-pagination` in `@bank/ui` (previous/next buttons and "Página X de Y"), placed in the table footer
+  - the page number is not in the URL.
+  Checks: ui test 17, frontend test 13, eslint:lint, typecheck and build all pass.
 
 ## Next step
 Manual check (serve backend + frontend, POST products), then commit on user request.

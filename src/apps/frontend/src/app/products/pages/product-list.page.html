@@ -56,6 +56,12 @@
 
   <ng-container uiTableFooter>
     <span>{{ store.total() }} Resultados</span>
+    <ui-pagination
+      [page]="store.page()"
+      [pageCount]="store.pageCount()"
+      (previous)="store.prev()"
+      (next)="store.next()"
+    />
     <ui-select
       label="Resultados por página"
       [options]="pageSizeOptions"

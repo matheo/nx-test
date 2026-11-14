@@ -44,6 +44,31 @@ describe('ProductListStore', () => {
     expect(store.visible()).toHaveLength(12);
   });
 
+  it('pages through the filtered results and clamps at the ends', () => {
+    repository.result = of(makeProducts(12));
+    store.load();
+    expect(store.pageCount()).toBe(3);
+    store.prev();
+    expect(store.page()).toBe(1);
+    store.next();
+    store.next();
+    store.next();
+    expect(store.page()).toBe(3);
+    expect(store.visible().map((p) => p.id)).toEqual(['id-10', 'id-11']);
+    expect(store.total()).toBe(12);
+  });
+
+  it('resets to the first page when the query or page size changes', () => {
+    repository.result = of(makeProducts(12));
+    store.load();
+    store.next();
+    store.query.set('product');
+    expect(store.page()).toBe(1);
+    store.next();
+    store.pageSize.set(10);
+    expect(store.page()).toBe(1);
+  });
+
   it('filters by name or description, case-insensitive and trimmed', () => {
     const products = makeProducts(3);
     products[0].name = 'Visa Gold';
