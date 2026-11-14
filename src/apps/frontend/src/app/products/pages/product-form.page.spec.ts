@@ -1,10 +1,15 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-import { provideRouter, Router, withComponentInputBinding } from '@angular/router';
+import {
+  provideRouter,
+  Router,
+  withComponentInputBinding,
+} from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { Observable, of, throwError } from 'rxjs';
 import { ProductInterface } from '@bank/models';
 import { ProductRepository } from '../api/product.repository';
+import { FakeProductRepository } from '../testing/fake-product.repository';
 import { TODAY } from '../forms/today';
 import { ProductFormPage } from './product-form.page';
 
@@ -26,16 +31,20 @@ describe('ProductFormPage', () => {
       create?: (p: ProductInterface) => Observable<ProductInterface>;
       url?: string;
       getById?: (id: string) => Observable<ProductInterface>;
-      update?: (id: string, p: ProductInterface) => Observable<ProductInterface>;
+      update?: (
+        id: string,
+        p: ProductInterface,
+      ) => Observable<ProductInterface>;
     } = {},
   ) {
-    const create = vi.fn(
-      options.create ?? ((p: ProductInterface) => of(p)),
+    const repository = new FakeProductRepository();
+    repository.exists.mockReturnValue(of(options.exists ?? false));
+    if (options.create) repository.create.mockImplementation(options.create);
+    if (options.update) repository.update.mockImplementation(options.update);
+    repository.getById.mockImplementation(
+      options.getById ?? (() => of(EDIT_PRODUCT)),
     );
-    const update = vi.fn(
-      options.update ?? ((_id: string, p: ProductInterface) => of(p)),
-    );
-    const getById = vi.fn(options.getById ?? (() => of(EDIT_PRODUCT)));
+    const { create, update, getById } = repository;
     TestBed.configureTestingModule({
       providers: [
         provideRouter(
@@ -49,13 +58,7 @@ describe('ProductFormPage', () => {
         { provide: TODAY, useValue: () => '2026-11-14' },
         {
           provide: ProductRepository,
-          useValue: {
-            exists: () => of(options.exists ?? false),
-            remove: () => of(undefined),
-            create,
-            getById,
-            update,
-          },
+          useValue: repository,
         },
       ],
     });

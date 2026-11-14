@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { stubDialogApi } from '@bank/testing';
 import { UiConfirmDialog } from './confirm-dialog';
 
 @Component({
@@ -23,20 +24,7 @@ class Host {
 }
 
 describe('UiConfirmDialog', () => {
-  beforeAll(() => {
-    // jsdom may not implement the modal dialog API.
-    const proto = HTMLDialogElement.prototype;
-    if (!proto.showModal) {
-      proto.showModal = function (this: HTMLDialogElement) {
-        this.setAttribute('open', '');
-      };
-    }
-    if (!proto.close) {
-      proto.close = function (this: HTMLDialogElement) {
-        this.removeAttribute('open');
-      };
-    }
-  });
+  beforeAll(stubDialogApi);
 
   async function render() {
     const fixture = TestBed.createComponent(Host);
@@ -101,7 +89,9 @@ describe('UiConfirmDialog', () => {
     const { host, dialog } = await render();
     dialog().click();
     expect(host.cancelled).toBe(1);
-    (dialog().querySelector('.ui-confirm-dialog__message') as HTMLElement).click();
+    (
+      dialog().querySelector('.ui-confirm-dialog__message') as HTMLElement
+    ).click();
     expect(host.cancelled).toBe(1);
   });
 

@@ -1,32 +1,24 @@
 import { TestBed } from '@angular/core/testing';
-import { provideRouter, Router, withComponentInputBinding } from '@angular/router';
+import {
+  provideRouter,
+  Router,
+  withComponentInputBinding,
+} from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
-import { Observable, of, throwError } from 'rxjs';
+import { makeProducts, stubDialogApi } from '@bank/testing';
+import { of, throwError } from 'rxjs';
 import { ProductRepository } from '../api/product.repository';
-import { makeProducts } from '../testing/make-products';
+import { FakeProductRepository } from '../testing/fake-product.repository';
 import { ProductListPage } from './product-list.page';
 
 describe('ProductListPage', () => {
-  beforeAll(() => {
-    // jsdom may not implement the modal dialog API.
-    const proto = HTMLDialogElement.prototype;
-    if (!proto.showModal) {
-      proto.showModal = function (this: HTMLDialogElement) {
-        this.setAttribute('open', '');
-      };
-    }
-    if (!proto.close) {
-      proto.close = function (this: HTMLDialogElement) {
-        this.removeAttribute('open');
-      };
-    }
-  });
+  beforeAll(stubDialogApi);
 
-  const remove = vi.fn<(id: string) => Observable<void>>();
+  let repository: FakeProductRepository;
 
   async function render(count: number, url = '/') {
-    remove.mockReset();
-    remove.mockImplementation(() => of(undefined));
+    repository = new FakeProductRepository();
+    repository.getAll.mockReturnValue(of(makeProducts(count)));
     TestBed.configureTestingModule({
       providers: [
         provideRouter(
@@ -35,7 +27,7 @@ describe('ProductListPage', () => {
         ),
         {
           provide: ProductRepository,
-          useValue: { getAll: () => of(makeProducts(count)), remove },
+          useValue: repository,
         },
       ],
     });
@@ -56,7 +48,9 @@ describe('ProductListPage', () => {
 
   it('navigates to the next page keeping the total', async () => {
     const el = await render(8);
-    (el.querySelector('[aria-label="Página siguiente"]') as HTMLButtonElement).click();
+    (
+      el.querySelector('[aria-label="Página siguiente"]') as HTMLButtonElement
+    ).click();
     await new Promise((r) => setTimeout(r));
     expect(rows(el)).toHaveLength(3);
     expect(el.textContent).toContain('8 Resultados');
@@ -129,12 +123,14 @@ describe('ProductListPage', () => {
 
     async function openDialog(el: HTMLElement, name = 'Product 0') {
       (
-        el.querySelector(`button[aria-label="Acciones de ${name}"]`) as HTMLButtonElement
+        el.querySelector(
+          `button[aria-label="Acciones de ${name}"]`,
+        ) as HTMLButtonElement
       ).click();
       await wait();
-      const item = Array.from(
-        el.querySelectorAll('[role="menuitem"]'),
-      ).find((i) => i.textContent?.includes('Eliminar')) as HTMLButtonElement;
+      const item = Array.from(el.querySelectorAll('[role="menuitem"]')).find(
+        (i) => i.textContent?.includes('Eliminar'),
+      ) as HTMLButtonElement;
       item.click();
       await wait();
     }
@@ -155,7 +151,7 @@ describe('ProductListPage', () => {
       dialogButton(el, 'Cancelar').click();
       await wait();
       expect(dialog(el).open).toBe(false);
-      expect(remove).not.toHaveBeenCalled();
+      expect(repository.remove).not.toHaveBeenCalled();
       expect(rows(el)).toHaveLength(2);
     });
 
@@ -164,7 +160,7 @@ describe('ProductListPage', () => {
       await openDialog(el);
       dialogButton(el, 'Confirmar').click();
       await wait();
-      expect(remove).toHaveBeenCalledWith('id-0');
+      expect(repository.remove).toHaveBeenCalledWith('id-0');
       expect(rows(el)).toHaveLength(1);
       expect(el.textContent).toContain('1 Resultados');
       expect(dialog(el).open).toBe(false);
@@ -172,7 +168,7 @@ describe('ProductListPage', () => {
 
     it('keeps the dialog open and shows an error when removal fails', async () => {
       const el = await render(2);
-      remove.mockImplementation(() => throwError(() => new Error('boom')));
+      repository.remove.mockReturnValue(throwError(() => new Error('boom')));
       await openDialog(el);
       dialogButton(el, 'Confirmar').click();
       await wait();

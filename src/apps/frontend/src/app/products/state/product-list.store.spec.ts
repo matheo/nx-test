@@ -1,39 +1,16 @@
 import { TestBed } from '@angular/core/testing';
-import { ProductInterface } from '@bank/models';
-import { Observable, of, throwError } from 'rxjs';
+import { makeProducts } from '@bank/testing';
+import { of, throwError } from 'rxjs';
 import { ProductRepository } from '../api/product.repository';
-import { makeProducts } from '../testing/make-products';
+import { FakeProductRepository } from '../testing/fake-product.repository';
 import { ProductListStore } from './product-list.store';
 
-class FakeRepository extends ProductRepository {
-  result: Observable<ProductInterface[]> = of([]);
-  removeResult: Observable<void> = of(undefined);
-  getAll() {
-    return this.result;
-  }
-  create(product: ProductInterface) {
-    return of(product);
-  }
-  getById(id: string) {
-    return of({ ...makeProducts(1)[0], id });
-  }
-  update(_id: string, product: ProductInterface) {
-    return of(product);
-  }
-  remove(_id: string): Observable<void> {
-    return this.removeResult;
-  }
-  exists() {
-    return of(false);
-  }
-}
-
 describe('ProductListStore', () => {
-  let repository: FakeRepository;
+  let repository: FakeProductRepository;
   let store: ProductListStore;
 
   beforeEach(() => {
-    repository = new FakeRepository();
+    repository = new FakeProductRepository();
     TestBed.configureTestingModule({
       providers: [
         ProductListStore,
@@ -44,14 +21,14 @@ describe('ProductListStore', () => {
   });
 
   it('loads products and clears loading', () => {
-    repository.result = of(makeProducts(12));
+    repository.getAll.mockReturnValue(of(makeProducts(12)));
     store.load();
     expect(store.loading()).toBe(false);
     expect(store.total()).toBe(12);
   });
 
   it('shows only pageSize rows (default 5) and follows page size changes', () => {
-    repository.result = of(makeProducts(12));
+    repository.getAll.mockReturnValue(of(makeProducts(12)));
     store.load();
     expect(store.visible()).toHaveLength(5);
     store.pageSize.set(10);
@@ -61,7 +38,7 @@ describe('ProductListStore', () => {
   });
 
   it('pages through the filtered results and clamps at the ends', () => {
-    repository.result = of(makeProducts(12));
+    repository.getAll.mockReturnValue(of(makeProducts(12)));
     store.load();
     expect(store.pageCount()).toBe(3);
     store.prev();
@@ -75,7 +52,7 @@ describe('ProductListStore', () => {
   });
 
   it('resets to the first page when the query or page size changes', () => {
-    repository.result = of(makeProducts(12));
+    repository.getAll.mockReturnValue(of(makeProducts(12)));
     store.load();
     store.next();
     store.query.set('product');
@@ -89,7 +66,7 @@ describe('ProductListStore', () => {
     const products = makeProducts(3);
     products[0].name = 'Visa Gold';
     products[1].description = 'Cuenta de AHORRO';
-    repository.result = of(products);
+    repository.getAll.mockReturnValue(of(products));
     store.load();
     store.query.set('  visa ');
     expect(store.filtered().map((p) => p.id)).toEqual(['id-0']);
@@ -99,7 +76,7 @@ describe('ProductListStore', () => {
   });
 
   it('removes a product from the list after the repository succeeds', () => {
-    repository.result = of(makeProducts(3));
+    repository.getAll.mockReturnValue(of(makeProducts(3)));
     store.load();
     store.remove('id-1').subscribe();
     expect(store.products().map((p) => p.id)).toEqual(['id-0', 'id-2']);
@@ -107,9 +84,9 @@ describe('ProductListStore', () => {
   });
 
   it('keeps the list and surfaces the error when removal fails', () => {
-    repository.result = of(makeProducts(3));
+    repository.getAll.mockReturnValue(of(makeProducts(3)));
     store.load();
-    repository.removeResult = throwError(() => new Error('boom'));
+    repository.remove.mockReturnValue(throwError(() => new Error('boom')));
     const error = vi.fn();
     store.remove('id-1').subscribe({ error });
     expect(error).toHaveBeenCalled();
@@ -117,7 +94,7 @@ describe('ProductListStore', () => {
   });
 
   it('moves to the previous page when the last row of the last page is removed', () => {
-    repository.result = of(makeProducts(6));
+    repository.getAll.mockReturnValue(of(makeProducts(6)));
     store.load();
     store.next();
     expect(store.page()).toBe(2);
@@ -127,7 +104,7 @@ describe('ProductListStore', () => {
   });
 
   it('exposes an error message when loading fails', () => {
-    repository.result = throwError(() => new Error('boom'));
+    repository.getAll.mockReturnValue(throwError(() => new Error('boom')));
     store.load();
     expect(store.error()).toBeTruthy();
     expect(store.loading()).toBe(false);

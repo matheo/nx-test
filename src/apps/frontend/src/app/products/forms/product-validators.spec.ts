@@ -1,6 +1,6 @@
 import { FormControl, FormGroup } from '@angular/forms';
 import { firstValueFrom, Observable, of, throwError } from 'rxjs';
-import { ProductRepository } from '../api/product.repository';
+import { FakeProductRepository } from '../testing/fake-product.repository';
 import {
   addOneYear,
   idAvailable,
@@ -91,19 +91,32 @@ describe('revisionOneYearAfter', () => {
 });
 
 describe('idAvailable', () => {
-  const repo = (exists: () => Observable<boolean>) =>
-    ({ exists }) as unknown as ProductRepository;
-  const run = (r: ProductRepository, value: string) =>
+  const repo = (exists: () => Observable<boolean>) => {
+    const fake = new FakeProductRepository();
+    fake.exists.mockImplementation(exists);
+    return fake;
+  };
+  const run = (r: FakeProductRepository, value: string) =>
     firstValueFrom(
       idAvailable(r, 0)(new FormControl(value)) as Observable<unknown>,
     );
 
   it('flags an existing id', async () => {
-    expect(await run(repo(() => of(true)), 'abc')).toEqual({ idTaken: true });
+    expect(
+      await run(
+        repo(() => of(true)),
+        'abc',
+      ),
+    ).toEqual({ idTaken: true });
   });
 
   it('accepts a free id', async () => {
-    expect(await run(repo(() => of(false)), 'abc')).toBeNull();
+    expect(
+      await run(
+        repo(() => of(false)),
+        'abc',
+      ),
+    ).toBeNull();
   });
 
   it('skips the request for an empty id', async () => {
@@ -114,7 +127,10 @@ describe('idAvailable', () => {
 
   it('passes when the request fails', async () => {
     expect(
-      await run(repo(() => throwError(() => new Error('x'))), 'abc'),
+      await run(
+        repo(() => throwError(() => new Error('x'))),
+        'abc',
+      ),
     ).toBeNull();
   });
 });
