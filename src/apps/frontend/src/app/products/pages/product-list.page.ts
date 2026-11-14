@@ -6,10 +6,11 @@ import {
   input,
   OnInit,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import {
   DisplayDatePipe,
   UiAvatar,
+  UiButton,
   UiInfoHint,
   UiPagination,
   UiSearchInput,
@@ -28,7 +29,9 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     DisplayDatePipe,
+    RouterLink,
     UiAvatar,
+    UiButton,
     UiInfoHint,
     UiPagination,
     UiSearchInput,

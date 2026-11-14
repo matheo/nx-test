@@ -78,4 +78,12 @@ describe('ProductListPage', () => {
     await new Promise((r) => setTimeout(r));
     expect(router.url).toBe('/');
   });
+
+  it('links the Agregar button to /new', async () => {
+    const el = await render(1);
+    const link = Array.from(el.querySelectorAll('a')).find((a) =>
+      a.textContent?.includes('Agregar'),
+    );
+    expect(link?.getAttribute('href')).toBe('/new');
+  });
 });
