@@ -96,4 +96,26 @@ describe('UiDropdownMenu', () => {
     await fixture.whenStable();
     expect(menu()).toBeNull();
   });
+
+  it('ignores document clicks while closed', async () => {
+    const { fixture, el, trigger, menu } = await render();
+    (el.querySelector('#outside') as HTMLElement).click();
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    await fixture.whenStable();
+    expect(menu()).toBeNull();
+    expect(trigger().getAttribute('aria-expanded')).toBe('false');
+  });
+
+  it('stops listening after it closes', async () => {
+    const { fixture, el, trigger, menu } = await render();
+    trigger().click();
+    await fixture.whenStable();
+    (el.querySelector('#outside') as HTMLElement).click();
+    await fixture.whenStable();
+    expect(menu()).toBeNull();
+
+    trigger().click();
+    await fixture.whenStable();
+    expect(menu()).not.toBeNull();
+  });
 });

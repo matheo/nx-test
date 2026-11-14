@@ -1,8 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  DestroyRef,
   DOCUMENT,
+  effect,
   ElementRef,
   inject,
   input,
@@ -23,11 +23,6 @@ import {
   selector: 'ui-dropdown-menu',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: {
-    '(document:click)': 'onDocumentClick($event)',
-    '(document:keydown.escape)': 'onEscape()',
-    '(window:resize)': 'close()',
-  },
   template: `
     <button
       #trigger
@@ -86,7 +81,7 @@ import {
     }
     ui-dropdown-menu .ui-dropdown-menu__panel {
       position: fixed;
-      z-index: 1000;
+      z-index: var(--ui-z-dropdown);
       display: flex;
       flex-direction: column;
       min-width: 140px;
@@ -94,7 +89,7 @@ import {
       border: 1px solid var(--ui-color-border);
       border-radius: var(--ui-radius-sm);
       background: var(--ui-color-surface);
-      box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
+      box-shadow: var(--ui-shadow-md);
     }
     ui-dropdown-menu [role='menuitem'] {
       display: block;
@@ -127,17 +122,35 @@ export class UiDropdownMenu {
     viewChild.required<ElementRef<HTMLButtonElement>>('trigger');
 
   constructor() {
-    // `scroll` does not bubble: listen in the capture phase so scrolling any
-    // ancestor (e.g. the table card) closes the fixed-position panel.
+    // Listen only while the menu is open, so closed rows cost nothing.
     const document = inject(DOCUMENT);
-    const onScroll = () => this.close();
-    document.addEventListener('scroll', onScroll, {
-      capture: true,
-      passive: true,
+    effect((onCleanup) => {
+      if (!this.open()) {
+        return;
+      }
+      const onClick = (event: Event) => this.onDocumentClick(event);
+      const onKeydown = (event: KeyboardEvent) => {
+        if (event.key === 'Escape') {
+          this.onEscape();
+        }
+      };
+      const onDismiss = () => this.close();
+      document.addEventListener('click', onClick);
+      document.addEventListener('keydown', onKeydown);
+      window.addEventListener('resize', onDismiss);
+      // `scroll` does not bubble: listen in the capture phase so scrolling any
+      // ancestor (e.g. the table card) closes the fixed-position panel.
+      document.addEventListener('scroll', onDismiss, {
+        capture: true,
+        passive: true,
+      });
+      onCleanup(() => {
+        document.removeEventListener('click', onClick);
+        document.removeEventListener('keydown', onKeydown);
+        window.removeEventListener('resize', onDismiss);
+        document.removeEventListener('scroll', onDismiss, { capture: true });
+      });
     });
-    inject(DestroyRef).onDestroy(() =>
-      document.removeEventListener('scroll', onScroll, { capture: true }),
-    );
   }
 
   protected toggle(): void {
