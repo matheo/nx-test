@@ -9,3 +9,4 @@ export * from './lib/display-date/display-date.pipe';
 export * from './lib/button/button';
 export * from './lib/form-field/form-field';
 export * from './lib/dropdown-menu/dropdown-menu';
+export * from './lib/confirm-dialog/confirm-dialog';
