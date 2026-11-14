@@ -43,6 +43,30 @@ describe('todayOrLater', () => {
   });
 });
 
+describe('todayOrLater with an unchanged value', () => {
+  const validate = todayOrLater(
+    () => '2026-11-14',
+    () => '2026-01-01',
+  );
+  const run = (value: string) => validate(new FormControl(value));
+
+  it('accepts the unchanged past value', () => {
+    expect(run('2026-01-01')).toBeNull();
+  });
+
+  it('still rejects any other past value', () => {
+    expect(run('2026-01-02')).toEqual({ minDate: true });
+  });
+
+  it('treats a null unchanged value as no exception', () => {
+    const v = todayOrLater(
+      () => '2026-11-14',
+      () => null,
+    );
+    expect(v(new FormControl('2026-01-01'))).toEqual({ minDate: true });
+  });
+});
+
 describe('revisionOneYearAfter', () => {
   const group = (release: string, revision: string) =>
     new FormGroup({

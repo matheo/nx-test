@@ -19,11 +19,21 @@ export function addOneYear(iso: string): string {
   return `${nextYear}-${month}-${adjustedDay}`;
 }
 
-/** Fails with `{minDate}` when the value is before today (string compare). */
-export function todayOrLater(today: () => string): ValidatorFn {
+/**
+ * Fails with `{minDate}` when the value is before today (string compare).
+ * A value equal to `unchanged()` (e.g. the original date of a product being
+ * edited) is always valid.
+ */
+export function todayOrLater(
+  today: () => string,
+  unchanged: () => string | null = () => null,
+): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const value = control.value as string;
-    return value && value < today() ? { minDate: true } : null;
+    if (!value || value === unchanged()) {
+      return null;
+    }
+    return value < today() ? { minDate: true } : null;
   };
 }
 

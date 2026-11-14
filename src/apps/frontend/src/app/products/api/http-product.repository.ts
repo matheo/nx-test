@@ -20,6 +20,21 @@ export class HttpProductRepository extends ProductRepository {
       .pipe(map((response) => response.data));
   }
 
+  getById(id: string): Observable<ProductInterface> {
+    return this.http.get<ProductInterface>(
+      `/backend/products/${encodeURIComponent(id)}`,
+    );
+  }
+
+  update(id: string, product: ProductInterface): Observable<ProductInterface> {
+    return this.http
+      .put<{ data: ProductInterface }>(
+        `/backend/products/${encodeURIComponent(id)}`,
+        product,
+      )
+      .pipe(map((response) => response.data));
+  }
+
   exists(id: string): Observable<boolean> {
     return this.http.get<boolean>(
       `/backend/products/verification/${encodeURIComponent(id)}`,

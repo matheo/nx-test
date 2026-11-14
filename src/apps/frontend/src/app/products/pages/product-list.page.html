@@ -26,22 +26,25 @@
           Fecha de reestructuración
           <ui-info-hint text="Fecha en la que el producto fue reestructurado" />
         </th>
+        <th scope="col" class="actions">
+          <span class="visually-hidden">Acciones</span>
+        </th>
       </tr>
     </thead>
     <tbody>
       @if (store.loading()) {
       <tr>
-        <td class="message" colspan="5">Cargando...</td>
+        <td class="message" colspan="6">Cargando...</td>
       </tr>
       } @else if (store.error()) {
       <tr>
-        <td class="message error" colspan="5" role="alert">
+        <td class="message error" colspan="6" role="alert">
           {{ store.error() }}
         </td>
       </tr>
       } @else if (store.visible().length === 0) {
       <tr>
-        <td class="message" colspan="5">No hay productos</td>
+        <td class="message" colspan="6">No hay productos</td>
       </tr>
       } @else { @for (product of store.visible(); track product.id) {
       <tr data-testid="product-row">
@@ -50,6 +53,11 @@
         <td>{{ product.description }}</td>
         <td>{{ product.date_release | displayDate }}</td>
         <td>{{ product.date_revision | displayDate }}</td>
+        <td class="actions">
+          <ui-dropdown-menu [label]="'Acciones de ' + product.name">
+            <a role="menuitem" [routerLink]="['/edit', product.id]">Editar</a>
+          </ui-dropdown-menu>
+        </td>
       </tr>
       } }
     </tbody>

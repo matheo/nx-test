@@ -5,6 +5,11 @@ import { Observable } from 'rxjs';
 export abstract class ProductRepository {
   abstract getAll(): Observable<ProductInterface[]>;
   abstract create(product: ProductInterface): Observable<ProductInterface>;
+  abstract getById(id: string): Observable<ProductInterface>;
+  abstract update(
+    id: string,
+    product: ProductInterface,
+  ): Observable<ProductInterface>;
   /** Emits true when a product with this id already exists. */
   abstract exists(id: string): Observable<boolean>;
 }

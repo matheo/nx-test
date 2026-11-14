@@ -2,9 +2,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   DestroyRef,
+  effect,
   inject,
+  input,
   signal,
+  untracked,
 } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import {
@@ -28,6 +32,7 @@ import { TODAY } from '../forms/today';
 type FieldName = keyof ProductInterface;
 
 const SAVE_ERROR = 'No se pudo guardar el producto.';
+const LOAD_ERROR = 'No se pudo cargar el producto.';
 
 @Component({
   selector: 'app-product-form-page',
@@ -41,6 +46,13 @@ export class ProductFormPage {
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
   private readonly today = inject(TODAY);
+
+  /** Bound from the `edit/:id` route (withComponentInputBinding). */
+  readonly id = input<string>();
+  protected readonly isEdit = computed(() => !!this.id());
+
+  /** Product loaded in edit mode; used by Reiniciar and the date validator. */
+  private original: ProductInterface | null = null;
 
   protected readonly form = inject(NonNullableFormBuilder).group(
     {
@@ -62,7 +74,13 @@ export class ProductFormPage {
         ],
       ],
       logo: ['', Validators.required],
-      date_release: ['', [Validators.required, todayOrLater(this.today)]],
+      date_release: [
+        '',
+        [
+          Validators.required,
+          todayOrLater(this.today, () => this.original?.date_release ?? null),
+        ],
+      ],
       date_revision: [{ value: '', disabled: true }, Validators.required],
     },
     { validators: revisionOneYearAfter },
@@ -77,6 +95,12 @@ export class ProductFormPage {
   });
 
   constructor() {
+    effect(() => {
+      const id = this.id();
+      if (id) {
+        untracked(() => this.load(id));
+      }
+    });
     this.form.controls.date_release.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((release) =>
@@ -99,7 +123,11 @@ export class ProductFormPage {
   }
 
   protected reset(): void {
-    this.form.reset();
+    if (this.original) {
+      this.applyProduct(this.original);
+    } else {
+      this.form.reset();
+    }
     this.serverError.set(null);
   }
 
@@ -109,7 +137,12 @@ export class ProductFormPage {
     }
     this.saving.set(true);
     this.serverError.set(null);
-    this.repository.create(this.form.getRawValue()).subscribe({
+    const value = this.form.getRawValue();
+    const id = this.id();
+    const request = id
+      ? this.repository.update(id, value)
+      : this.repository.create(value);
+    request.subscribe({
       next: () => {
         this.saving.set(false);
         void this.router.navigate(['/']);
@@ -119,6 +152,26 @@ export class ProductFormPage {
         this.serverError.set(this.serverMessage(err));
       },
     });
+  }
+
+  private load(id: string): void {
+    this.serverError.set(null);
+    this.repository
+      .getById(id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (product) => {
+          this.original = product;
+          this.applyProduct(product);
+        },
+        error: () => this.serverError.set(LOAD_ERROR),
+      });
+  }
+
+  /** Fills the form with a product and keeps the id locked (edit mode). */
+  private applyProduct(product: ProductInterface): void {
+    this.form.reset(product);
+    this.form.controls.id.disable();
   }
 
   private messageFor(name: FieldName, control: AbstractControl): string | null {

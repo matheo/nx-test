@@ -44,3 +44,19 @@ tbody tr:last-child td {
 .error {
   color: var(--ui-color-error);
 }
+
+.actions {
+  width: 1%;
+  text-align: right;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

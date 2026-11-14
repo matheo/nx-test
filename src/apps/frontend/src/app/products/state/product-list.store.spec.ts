@@ -13,6 +13,12 @@ class FakeRepository extends ProductRepository {
   create(product: ProductInterface) {
     return of(product);
   }
+  getById(id: string) {
+    return of({ ...makeProducts(1)[0], id });
+  }
+  update(_id: string, product: ProductInterface) {
+    return of(product);
+  }
   exists() {
     return of(false);
   }

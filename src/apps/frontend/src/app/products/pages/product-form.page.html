@@ -1,5 +1,7 @@
 <form class="card" [formGroup]="form" (ngSubmit)="submit()" novalidate>
-  <h1 class="title">Formulario de Registro</h1>
+  <h1 class="title">
+    {{ isEdit() ? 'Formulario de Edición' : 'Formulario de Registro' }}
+  </h1>
 
   <div class="grid">
     <ui-form-field label="ID" for="product-id" [error]="errorFor('id')">

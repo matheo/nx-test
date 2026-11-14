@@ -79,6 +79,18 @@ describe('ProductListPage', () => {
     expect(router.url).toBe('/');
   });
 
+  it('opens the row menu with an Editar link to /edit/<id>', async () => {
+    const el = await render(1);
+    const trigger = el.querySelector(
+      'button[aria-label="Acciones de Product 0"]',
+    ) as HTMLButtonElement;
+    trigger.click();
+    await new Promise((r) => setTimeout(r));
+    const link = el.querySelector('[role="menuitem"]');
+    expect(link?.textContent).toContain('Editar');
+    expect(link?.getAttribute('href')).toBe('/edit/id-0');
+  });
+
   it('links the Agregar button to /new', async () => {
     const el = await render(1);
     const link = Array.from(el.querySelectorAll('a')).find((a) =>
