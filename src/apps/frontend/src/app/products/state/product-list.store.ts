@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ProductInterface } from '@bank/models';
+import { Observable, tap } from 'rxjs';
 import { ProductRepository } from '../api/product.repository';
 
 export type PageSize = 5 | 10 | 20;
@@ -60,6 +61,18 @@ export class ProductListStore {
 
   prev(): void {
     this.page.update((page) => Math.max(page - 1, 1));
+  }
+
+  /** Deletes a product and drops it from the list. The caller subscribes. */
+  remove(id: string): Observable<void> {
+    return this.repository.remove(id).pipe(
+      tap(() => {
+        this.products.update((products) =>
+          products.filter((product) => product.id !== id),
+        );
+        this.page.update((page) => Math.min(page, this.pageCount()));
+      }),
+    );
   }
 
   load(): void {

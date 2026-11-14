@@ -7,6 +7,7 @@ import { ProductListStore } from './product-list.store';
 
 class FakeRepository extends ProductRepository {
   result: Observable<ProductInterface[]> = of([]);
+  removeResult: Observable<void> = of(undefined);
   getAll() {
     return this.result;
   }
@@ -18,6 +19,9 @@ class FakeRepository extends ProductRepository {
   }
   update(_id: string, product: ProductInterface) {
     return of(product);
+  }
+  remove(_id: string): Observable<void> {
+    return this.removeResult;
   }
   exists() {
     return of(false);
@@ -92,6 +96,34 @@ describe('ProductListStore', () => {
     store.query.set('ahorro');
     expect(store.filtered().map((p) => p.id)).toEqual(['id-1']);
     expect(store.total()).toBe(1);
+  });
+
+  it('removes a product from the list after the repository succeeds', () => {
+    repository.result = of(makeProducts(3));
+    store.load();
+    store.remove('id-1').subscribe();
+    expect(store.products().map((p) => p.id)).toEqual(['id-0', 'id-2']);
+    expect(store.total()).toBe(2);
+  });
+
+  it('keeps the list and surfaces the error when removal fails', () => {
+    repository.result = of(makeProducts(3));
+    store.load();
+    repository.removeResult = throwError(() => new Error('boom'));
+    const error = vi.fn();
+    store.remove('id-1').subscribe({ error });
+    expect(error).toHaveBeenCalled();
+    expect(store.total()).toBe(3);
+  });
+
+  it('moves to the previous page when the last row of the last page is removed', () => {
+    repository.result = of(makeProducts(6));
+    store.load();
+    store.next();
+    expect(store.page()).toBe(2);
+    store.remove('id-5').subscribe();
+    expect(store.page()).toBe(1);
+    expect(store.visible()).toHaveLength(5);
   });
 
   it('exposes an error message when loading fails', () => {

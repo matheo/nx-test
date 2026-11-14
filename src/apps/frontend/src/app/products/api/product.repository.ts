@@ -10,6 +10,7 @@ export abstract class ProductRepository {
     id: string,
     product: ProductInterface,
   ): Observable<ProductInterface>;
+  abstract remove(id: string): Observable<void>;
   /** Emits true when a product with this id already exists. */
   abstract exists(id: string): Observable<boolean>;
 }

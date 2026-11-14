@@ -60,3 +60,9 @@ tbody tr:last-child td {
   clip-path: inset(50%);
   white-space: nowrap;
 }
+
+.delete-error {
+  margin: var(--ui-space-3) 0 0;
+  font-size: var(--ui-font-size-md);
+  color: var(--ui-color-error);
+}

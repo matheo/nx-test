@@ -51,6 +51,7 @@ describe('ProductFormPage', () => {
           provide: ProductRepository,
           useValue: {
             exists: () => of(options.exists ?? false),
+            remove: () => of(undefined),
             create,
             getById,
             update,

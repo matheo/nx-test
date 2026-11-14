@@ -35,6 +35,12 @@ export class HttpProductRepository extends ProductRepository {
       .pipe(map((response) => response.data));
   }
 
+  remove(id: string): Observable<void> {
+    return this.http
+      .delete(`/backend/products/${encodeURIComponent(id)}`)
+      .pipe(map(() => undefined));
+  }
+
   exists(id: string): Observable<boolean> {
     return this.http.get<boolean>(
       `/backend/products/verification/${encodeURIComponent(id)}`,

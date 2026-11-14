@@ -56,6 +56,9 @@
         <td class="actions">
           <ui-dropdown-menu [label]="'Acciones de ' + product.name">
             <a role="menuitem" [routerLink]="['/edit', product.id]">Editar</a>
+            <button type="button" role="menuitem" (click)="askDelete(product)">
+              Eliminar
+            </button>
           </ui-dropdown-menu>
         </td>
       </tr>
@@ -79,3 +82,15 @@
     />
   </ng-container>
 </ui-table-card>
+
+<ui-confirm-dialog
+  [open]="pendingDelete() !== null"
+  [busy]="deleting()"
+  (confirmed)="confirmDelete()"
+  (cancelled)="cancelDelete()"
+>
+  ¿Estas seguro de eliminar el producto {{ pendingDelete()?.name }}?
+  @if (deleteError()) {
+  <p class="delete-error" role="alert">{{ deleteError() }}</p>
+  }
+</ui-confirm-dialog>

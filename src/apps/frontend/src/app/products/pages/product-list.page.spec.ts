@@ -1,13 +1,32 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router, withComponentInputBinding } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
-import { of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { ProductRepository } from '../api/product.repository';
 import { makeProducts } from '../testing/make-products';
 import { ProductListPage } from './product-list.page';
 
 describe('ProductListPage', () => {
+  beforeAll(() => {
+    // jsdom may not implement the modal dialog API.
+    const proto = HTMLDialogElement.prototype;
+    if (!proto.showModal) {
+      proto.showModal = function (this: HTMLDialogElement) {
+        this.setAttribute('open', '');
+      };
+    }
+    if (!proto.close) {
+      proto.close = function (this: HTMLDialogElement) {
+        this.removeAttribute('open');
+      };
+    }
+  });
+
+  const remove = vi.fn<(id: string) => Observable<void>>();
+
   async function render(count: number, url = '/') {
+    remove.mockReset();
+    remove.mockImplementation(() => of(undefined));
     TestBed.configureTestingModule({
       providers: [
         provideRouter(
@@ -16,7 +35,7 @@ describe('ProductListPage', () => {
         ),
         {
           provide: ProductRepository,
-          useValue: { getAll: () => of(makeProducts(count)) },
+          useValue: { getAll: () => of(makeProducts(count)), remove },
         },
       ],
     });
@@ -97,5 +116,71 @@ describe('ProductListPage', () => {
       a.textContent?.includes('Agregar'),
     );
     expect(link?.getAttribute('href')).toBe('/new');
+  });
+
+  describe('deleting', () => {
+    const wait = () => new Promise((r) => setTimeout(r));
+    const dialog = (el: HTMLElement) =>
+      el.querySelector('dialog') as HTMLDialogElement;
+    const dialogButton = (el: HTMLElement, label: string) =>
+      Array.from(dialog(el).querySelectorAll('button')).find(
+        (b) => b.textContent?.trim() === label,
+      ) as HTMLButtonElement;
+
+    async function openDialog(el: HTMLElement, name = 'Product 0') {
+      (
+        el.querySelector(`button[aria-label="Acciones de ${name}"]`) as HTMLButtonElement
+      ).click();
+      await wait();
+      const item = Array.from(
+        el.querySelectorAll('[role="menuitem"]'),
+      ).find((i) => i.textContent?.includes('Eliminar')) as HTMLButtonElement;
+      item.click();
+      await wait();
+    }
+
+    it('opens the confirm dialog with the product name', async () => {
+      const el = await render(2);
+      expect(dialog(el).open).toBe(false);
+      await openDialog(el);
+      expect(dialog(el).open).toBe(true);
+      expect(dialog(el).textContent).toContain(
+        '¿Estas seguro de eliminar el producto Product 0?',
+      );
+    });
+
+    it('closes without removing when Cancelar is clicked', async () => {
+      const el = await render(2);
+      await openDialog(el);
+      dialogButton(el, 'Cancelar').click();
+      await wait();
+      expect(dialog(el).open).toBe(false);
+      expect(remove).not.toHaveBeenCalled();
+      expect(rows(el)).toHaveLength(2);
+    });
+
+    it('removes the row and closes the dialog when Confirmar is clicked', async () => {
+      const el = await render(2);
+      await openDialog(el);
+      dialogButton(el, 'Confirmar').click();
+      await wait();
+      expect(remove).toHaveBeenCalledWith('id-0');
+      expect(rows(el)).toHaveLength(1);
+      expect(el.textContent).toContain('1 Resultados');
+      expect(dialog(el).open).toBe(false);
+    });
+
+    it('keeps the dialog open and shows an error when removal fails', async () => {
+      const el = await render(2);
+      remove.mockImplementation(() => throwError(() => new Error('boom')));
+      await openDialog(el);
+      dialogButton(el, 'Confirmar').click();
+      await wait();
+      expect(dialog(el).open).toBe(true);
+      expect(dialog(el).querySelector('[role="alert"]')?.textContent).toContain(
+        'No se pudo eliminar el producto.',
+      );
+      expect(rows(el)).toHaveLength(2);
+    });
   });
 });
